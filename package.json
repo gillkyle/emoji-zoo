@@ -1,0 +1,17 @@
+{
+  "name": "emoji-ocean",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "rand": "node random-select.js"
+  },
+  "author": "gillkyle",
+  "license": "ISC",
+  "dependencies": {
+    "random-int": "^1.0.0",
+    "twit": "^2.2.9"
+  }
+}
