@@ -11,6 +11,7 @@
   "author": "gillkyle",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.3.0",
     "random-int": "^1.0.0",
     "twit": "^2.2.9"
   }
