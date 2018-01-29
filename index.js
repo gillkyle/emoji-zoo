@@ -2,6 +2,7 @@ const Twit = require("twit");
 const config = require("./config");
 const chalk = require("chalk");
 const randomSelect = require("./random-select");
+const zoos = require("./zoos.js");
 
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
@@ -39,34 +40,15 @@ let zoo = `
 
 `;
 
+console.log(zoos.harambeZoo);
+
 let T = new Twit(config);
 T.post(
   "statuses/update",
   {
-    status: zoo
+    status: zoos.harambeZoo
   },
   function(err, data, response) {
     console.log(chalk.green("Tweet posted successfully!"));
   }
 );
-
-// proper alignment of characters for shape on Twitter
-let emptyZoo = `
-.
-╱￣￣￣￣￣￣￣￣￣╲
-|                                      |
-|                                      |
-|                                      |
-|╲_________________╱|
-╲|___|___|___|___|___|╱
-
-`;
-let fullZoo = `
-.    _____________   
-╱     🐘                ╲  
-|        🌱   🐘           |🏃‍♀️
-|                      🌾     |
-|╲______________╱|    
-╲|___|___|___|___|╱         
- 🚶      🏃‍♀️
-`;
