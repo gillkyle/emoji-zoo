@@ -23,10 +23,10 @@ for (let i = 0; i < GRID_COLUMNS; i++) {
   row3.push(EMPTY_GRID_SPACE);
 }
 
-let animal = randomSelect.getAnimal();
-row1[3] = animal;
-row2[6] = animal;
-row3[1] = animal;
+let emojiSet = randomSelect.getEmojiSet();
+row1[3] = emojiSet.animals[0];
+row2[6] = emojiSet.plants[0];
+row3[1] = emojiSet.animals[0];
 
 let zoo = `
 .    ________________   
