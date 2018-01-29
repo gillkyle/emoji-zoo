@@ -21,12 +21,12 @@ function randomElementOfArray(array) {
 function getRandomNum(max) {
   return randomInt(0, max);
 }
-function addElementsToSet(emojiSet, numPlants, numAnimals) {
+function addElementsToSet(emojiSet, numPlants, numAnimals, setType) {
   for (let i = 0; i < numAnimals; i++) {
-    emojiSet.animals.push(randomElementOfArray(emojiSets.common[0]));
+    emojiSet.animals.push(randomElementOfArray(emojiSets[setType][0]));
   }
   for (let i = 0; i < numPlants; i++) {
-    emojiSet.plants.push(randomElementOfArray(emojiSets.common[1]));
+    emojiSet.plants.push(randomElementOfArray(emojiSets[setType][1]));
   }
   return emojiSet;
 }
@@ -37,33 +37,31 @@ function getEmojiSet() {
     animals: [],
     plants: []
   };
-
   numPlants = getRandomNum(MAX_PLANTS);
   numAnimals = getRandomNum(MAX_ANIMALS);
-
   switch (true) {
     case probabilityNum <= 40:
-      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals);
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "common");
 
       break;
-    // case probabilityNum <= 60:
-    //   animals = emojiSets.small[0][randomInt(0, emojiSets.small.length - 1)];
-    //   break;
-    // case probabilityNum <= 70:
-    //   animals = emojiSets.reptile[0][randomInt(0, emojiSets.reptile.length - 1)];
-    //   break;
-    // case probabilityNum <= 75:
-    //   animals = emojiSets.single[0][randomInt(0, emojiSets.single.length - 1)];
-    //   break;
-    // case probabilityNum <= 90:
-    //   animals = emojiSets.water[0][randomInt(0, emojiSets.water.length - 1)];
-    //   break;
-    // case probabilityNum <= 99:
-    //   animals = emojiSets.fly[0][randomInt(0, emojiSets.fly.length - 1)];
-    //   break;
-    // case probabilityNum <= 100:
-    //   animals = emojiSets.rare[0][randomInt(0, emojiSets.rare.length - 1)];
-    //   break;
+    case probabilityNum <= 60:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "small");
+      break;
+    case probabilityNum <= 70:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "water");
+      break;
+    case probabilityNum <= 75:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "reptile");
+      break;
+    case probabilityNum <= 90:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "single");
+      break;
+    case probabilityNum <= 99:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "fly");
+      break;
+    case probabilityNum <= 100:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "rare");
+      break;
     default:
       emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals);
       break;
