@@ -2,6 +2,7 @@ const Twit = require("twit");
 const config = require("./config");
 const chalk = require("chalk");
 const randomSelect = require("./random-select");
+const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
 const GRID_COLUMNS = 7;
@@ -14,41 +15,55 @@ X X X X X X X
 X X X X X X X
 X X X X X X X
 */
-
-let row1 = [];
-let row2 = [];
-let row3 = [];
-for (let i = 0; i < GRID_COLUMNS; i++) {
-  row1.push(EMPTY_GRID_SPACE);
-  row2.push(EMPTY_GRID_SPACE);
-  row3.push(EMPTY_GRID_SPACE);
+let grid = [[], [], []];
+for (let j = 0; j < grid.length; j++) {
+  for (let i = 0; i < GRID_COLUMNS; i++) {
+    grid[j].push(EMPTY_GRID_SPACE);
+  }
 }
 
+let row_people = [];
+row_people.push(EMPTY_GRID_SPACE);
+
 let emojiSet = randomSelect.getEmojiSet();
-row1[3] = emojiSet.animals[0];
-row2[6] = emojiSet.plants[0];
-row3[1] = emojiSet.animals[0];
+console.log(emojiSet);
+
+for (let j = 0; j < grid.length; j++) {
+  for (let i = 0; i < GRID_COLUMNS; i++) {
+    if (getRandomNumber(3) === 0) {
+      console.log(`plant placed on grid at: row ${j}, column ${i}`);
+      grid[j][i] = emojiSet.plants[getRandomNumber(emojiSet.plants.length - 1)];
+    }
+    if (getRandomNumber(7) === 0) {
+      console.log(`animal placed on grid at: row ${j}, column ${i}`);
+      grid[j][i] =
+        emojiSet.animals[getRandomNumber(emojiSet.animals.length - 1)];
+    }
+  }
+}
 
 let zoo = `
 .    ________________   
 ╱                                ╲  
-|  ${row1.join("")}  |
-|  ${row2.join("")}  |
-|  ${row3.join("")}  |
+|  ${grid[0].join("")}  |
+|  ${grid[1].join("")}  |
+|  ${grid[2].join("")}  |
 |╲_________________╱|
 ╲|___|___|___|___|___|╱
-
+.    ${row_people.join("")}
 `;
-
-console.log(zoos.harambeZoo);
 
 let T = new Twit(config);
 T.post(
   "statuses/update",
   {
-    status: zoos.harambeZoo
+    status: zoo
   },
   function(err, data, response) {
-    console.log(chalk.green("Tweet posted successfully!"));
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(chalk.green("Tweet posted successfully!"));
+    }
   }
 );

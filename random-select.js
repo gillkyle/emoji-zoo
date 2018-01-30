@@ -33,16 +33,23 @@ function addElementsToSet(emojiSet, numPlants, numAnimals, setType) {
 
 function getEmojiSet() {
   let probabilityNum = randomInt(0, 100);
+  let numPlants = 0;
+  let numAnimals = 0;
   let emojiSet = {
     animals: [],
     plants: []
   };
-  numPlants = getRandomNum(MAX_PLANTS);
-  numAnimals = getRandomNum(MAX_ANIMALS);
+  while (numPlants === 0 || numAnimals === 0) {
+    if (numPlants === 0) {
+      numPlants = getRandomNum(MAX_PLANTS);
+    }
+    if (numAnimals === 0) {
+      numAnimals = getRandomNum(MAX_ANIMALS);
+    }
+  }
   switch (true) {
     case probabilityNum <= 40:
       emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "common");
-
       break;
     case probabilityNum <= 60:
       emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "small");
@@ -69,4 +76,4 @@ function getEmojiSet() {
   return emojiSet;
 }
 
-module.exports = { getEmojiSet };
+module.exports = { getEmojiSet, getRandomNum };
