@@ -12,6 +12,7 @@ const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
+const HOURS_TO_WAIT = 6;
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
 
@@ -26,40 +27,42 @@ X X X X X X X
 X X X X X X X
 P P P P P P P
 */
-let grid = [[], [], []];
-let row_people = [];
-for (let j = 0; j < grid.length; j++) {
-  for (let i = 0; i < GRID_COLUMNS; i++) {
-    grid[j].push(EMPTY_GRID_SPACE);
-    row_people.push(EMPTY_GRID_SPACE);
-  }
-}
-
-let emojiSet = randomSelect.getEmojiSet();
-console.log(emojiSet);
-
-// add plants and animals
-for (let j = 0; j < grid.length; j++) {
-  for (let i = 0; i < GRID_COLUMNS; i++) {
-    if (getRandomNumber(3) === 0) {
-      console.log(`plant placed on grid at: row ${j}, column ${i}`);
-      grid[j][i] = emojiSet.plants[getRandomNumber(emojiSet.plants.length - 1)];
-    }
-    if (getRandomNumber(7) === 0) {
-      console.log(`animal placed on grid at: row ${j}, column ${i}`);
-      grid[j][i] =
-        emojiSet.animals[getRandomNumber(emojiSet.animals.length - 1)];
+const tweetZoo = () => {
+  let grid = [[], [], []];
+  let row_people = [];
+  for (let j = 0; j < grid.length; j++) {
+    for (let i = 0; i < GRID_COLUMNS; i++) {
+      grid[j].push(EMPTY_GRID_SPACE);
+      row_people.push(EMPTY_GRID_SPACE);
     }
   }
-}
 
-for (let i = 0; i < 5; i++) {
-  if (getRandomNumber(3) == 0) {
-    row_people[i] = emojiPeople[getRandomNumber(emojiPeople.length - 1)];
+  let emojiSet = randomSelect.getEmojiSet();
+  console.log(emojiSet);
+
+  // add plants and animals
+  for (let j = 0; j < grid.length; j++) {
+    for (let i = 0; i < GRID_COLUMNS; i++) {
+      if (getRandomNumber(3) === 0) {
+        console.log(`plant placed on grid at: row ${j}, column ${i}`);
+        grid[j][i] =
+          emojiSet.plants[getRandomNumber(emojiSet.plants.length - 1)];
+      }
+      if (getRandomNumber(7) === 0) {
+        console.log(`animal placed on grid at: row ${j}, column ${i}`);
+        grid[j][i] =
+          emojiSet.animals[getRandomNumber(emojiSet.animals.length - 1)];
+      }
+    }
   }
-}
 
-let zoo = `
+  for (let i = 0; i < 5; i++) {
+    if (getRandomNumber(3) == 0) {
+      row_people[i] = emojiPeople[getRandomNumber(emojiPeople.length - 1)];
+    }
+  }
+
+  let zoo = `
 .    ________________   
 ╱                                ╲  
 |  ${grid[0].join("")}  |
@@ -70,17 +73,20 @@ let zoo = `
 . ${row_people.join("")}
 `;
 
-let T = new Twit(envConfig);
-T.post(
-  "statuses/update",
-  {
-    status: zoo
-  },
-  function(err, data, response) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(chalk.green("Tweet posted successfully!"));
+  let T = new Twit(envConfig);
+  T.post(
+    "statuses/update",
+    {
+      status: zoo
+    },
+    function(err, data, response) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(chalk.green("Tweet posted successfully!"));
+      }
     }
-  }
-);
+  );
+};
+
+setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
