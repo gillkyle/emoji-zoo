@@ -1,3 +1,10 @@
+require("dotenv").config();
+const envConfig = {
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+};
 const Twit = require("twit");
 const config = require("./config");
 const chalk = require("chalk");
@@ -63,7 +70,7 @@ let zoo = `
 . ${row_people.join("")}
 `;
 
-let T = new Twit(config);
+let T = new Twit(envConfig);
 T.post(
   "statuses/update",
   {
