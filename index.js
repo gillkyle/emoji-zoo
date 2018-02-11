@@ -7,27 +7,31 @@ const zoos = require("./zoos.js");
 
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
+
+const emojiPeople = ["🚶🏽‍", "️🚶🏽‍", "️🏃🏽‍", "️🏃🏽‍"];
 /*
 7x3 grid for plants and animals
+One row on bottom for people
 One emoji takes 5 spaces ie each 
 grid space represents 5 spaces
 X X X X X X X
 X X X X X X X
 X X X X X X X
+P P P P P P P
 */
 let grid = [[], [], []];
+let row_people = [];
 for (let j = 0; j < grid.length; j++) {
   for (let i = 0; i < GRID_COLUMNS; i++) {
     grid[j].push(EMPTY_GRID_SPACE);
+    row_people.push(EMPTY_GRID_SPACE);
   }
 }
-
-let row_people = [];
-row_people.push(EMPTY_GRID_SPACE);
 
 let emojiSet = randomSelect.getEmojiSet();
 console.log(emojiSet);
 
+// add plants and animals
 for (let j = 0; j < grid.length; j++) {
   for (let i = 0; i < GRID_COLUMNS; i++) {
     if (getRandomNumber(3) === 0) {
@@ -42,6 +46,12 @@ for (let j = 0; j < grid.length; j++) {
   }
 }
 
+for (let i = 0; i < 5; i++) {
+  if (getRandomNumber(3) == 0) {
+    row_people[i] = emojiPeople[getRandomNumber(emojiPeople.length - 1)];
+  }
+}
+
 let zoo = `
 .    ________________   
 ╱                                ╲  
@@ -50,7 +60,7 @@ let zoo = `
 |  ${grid[2].join("")}  |
 |╲_________________╱|
 ╲|___|___|___|___|___|╱
-.    ${row_people.join("")}
+. ${row_people.join("")}
 `;
 
 let T = new Twit(config);
