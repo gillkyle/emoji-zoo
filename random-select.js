@@ -2,9 +2,10 @@ const randomInt = require("random-int");
 
 const emojiSets = {
   common: [
-    ["🐆", "🐅", "🐃", "🐂", "🐪", "🐫", "🐘", "🐐", "🐖", "🐏", "🐑"],
+    ["🐃", "🐂", "🐪", "🐫", "🐘", "🐐", "🐖", "🐏", "🐑"],
     ["🌺", "🌻", "🌳", "🌱", "🌿", "🌾"]
   ],
+  cats: [["🐆", "🐅"], ["🌳", "🌱", "🌿", "🌾"]],
   small: [["🐒", "🐇", "🐀", "🐿", "🦔"], ["🌺", "🌻", "🌵", "🌳", "🌱", "🌿"]],
   water: [["🐧", "🐢", "🦀", "🐊", "🦆"], ["🌱", "🌿", "🎍", "🎋", "🍄"]],
   reptile: [["🦂", "🐍", "🦎"], ["🌵", "🌱", "🌿"]],
@@ -50,6 +51,9 @@ function getEmojiSet() {
   switch (true) {
     case probabilityNum <= 40:
       emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "common");
+      break;
+    case probabilityNum <= 45:
+      emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "cats");
       break;
     case probabilityNum <= 60:
       emojiSet = addElementsToSet(emojiSet, numPlants, numAnimals, "small");
