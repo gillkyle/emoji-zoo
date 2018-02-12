@@ -6,7 +6,7 @@ const envConfig = {
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 };
 const Twit = require("twit");
-const config = require("./config");
+// const config = require("./config");
 const chalk = require("chalk");
 const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
