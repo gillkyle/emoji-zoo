@@ -1,33 +1,25 @@
 require("dotenv").config();
-const envConfig = {
-  consumer_key: process.env.CONSUMER_KEY,
-  consumer_secret: process.env.CONSUMER_SECRET,
-  access_token: process.env.ACCESS_TOKEN,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET
-};
 const Twit = require("twit");
+
 // const config = require("./config");
 const chalk = require("chalk");
 const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
+const ENV_CONFIG = {
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+};
 const HOURS_TO_WAIT = 5;
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
-
 const emojiPeople = ["🚶🏽‍", "️🚶🏽‍", "️🏃🏽‍", "️🏃🏽‍"];
-/*
-7x3 grid for plants and animals
-One row on bottom for people
-One emoji takes 5 spaces ie each 
-grid space represents 5 spaces
-X X X X X X X
-X X X X X X X
-X X X X X X X
-P P P P P P P
-*/
+
 const tweetZoo = () => {
+  // initialize the grid, people row, and fill them with empty spaces
   let grid = [[], [], []];
   let row_people = [];
   for (let j = 0; j < grid.length; j++) {
@@ -37,10 +29,11 @@ const tweetZoo = () => {
     }
   }
 
+  // get emoji set of plants and animals to insert
   let emojiSet = randomSelect.getEmojiSet();
   console.log(emojiSet);
 
-  // add plants and animals
+  // add plants and animals to inside grid
   for (let j = 0; j < grid.length; j++) {
     for (let i = 0; i < GRID_COLUMNS; i++) {
       if (getRandomNumber(3) === 0) {
@@ -55,13 +48,14 @@ const tweetZoo = () => {
       }
     }
   }
-
+  // add people to bottom row
   for (let i = 0; i < 5; i++) {
     if (getRandomNumber(3) == 0) {
       row_people[i] = emojiPeople[getRandomNumber(emojiPeople.length - 1)];
     }
   }
 
+  // assemble zoo tweet payload
   let zoo = `
 .    ________________   
 ╱                                ╲  
@@ -73,7 +67,8 @@ const tweetZoo = () => {
 . ${row_people.join("")}
 `;
 
-  let T = new Twit(envConfig);
+  // configure Twitter and send tweet
+  let T = new Twit(ENV_CONFIG);
   T.post(
     "statuses/update",
     {
@@ -89,10 +84,10 @@ const tweetZoo = () => {
   );
 };
 
-tweetZoo();
-console.log(
-  chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting again`)
-);
-
 // for use without Heroku Scheduler
 // setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
+// console.log(
+//   chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting again`)
+// );
+
+module.exports = { tweetZoo };

@@ -45,3 +45,14 @@ module.exports = {
   smallZoo,
   harambeZoo
 };
+
+/*
+7x3 grid for plants and animals
+One row on bottom for people
+One emoji takes 5 spaces ie each 
+grid space represents 5 spaces
+X X X X X X X
+X X X X X X X
+X X X X X X X
+P P P P P P P
+*/
