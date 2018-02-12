@@ -27,6 +27,7 @@ X X X X X X X
 X X X X X X X
 P P P P P P P
 */
+console.log(envConfig);
 const tweetZoo = () => {
   let grid = [[], [], []];
   let row_people = [];
@@ -89,5 +90,8 @@ const tweetZoo = () => {
   );
 };
 
-console.log(chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting`));
+tweetZoo();
+console.log(
+  chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting again`)
+);
 setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
