@@ -12,7 +12,7 @@ const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
-const HOURS_TO_WAIT = 0.25;
+const HOURS_TO_WAIT = 5;
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
 
@@ -27,7 +27,6 @@ X X X X X X X
 X X X X X X X
 P P P P P P P
 */
-console.log(envConfig);
 const tweetZoo = () => {
   let grid = [[], [], []];
   let row_people = [];
@@ -94,4 +93,6 @@ tweetZoo();
 console.log(
   chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting again`)
 );
-setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
+
+// for use without Heroku Scheduler
+// setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
