@@ -12,7 +12,7 @@ const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
-const HOURS_TO_WAIT = 1;
+const HOURS_TO_WAIT = 0.25;
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
 
