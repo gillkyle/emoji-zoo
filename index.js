@@ -12,7 +12,7 @@ const randomSelect = require("./random-select");
 const getRandomNumber = randomSelect.getRandomNum;
 const zoos = require("./zoos.js");
 
-const HOURS_TO_WAIT = 6;
+const HOURS_TO_WAIT = 1;
 const GRID_COLUMNS = 7;
 const EMPTY_GRID_SPACE = "     ";
 
@@ -89,4 +89,5 @@ const tweetZoo = () => {
   );
 };
 
+console.log(chalk.yellow(`waiting ${HOURS_TO_WAIT} hour(s) before tweeting`));
 setInterval(tweetZoo, 60 * 1000 * 60 * HOURS_TO_WAIT);
